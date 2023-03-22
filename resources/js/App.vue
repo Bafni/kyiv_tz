@@ -5,12 +5,23 @@
         </div>
     </div>
 <router-view></router-view>
-
+<teleport to="body">
+    <the-modal/>
+</teleport>
 </template>
 
 <script>
+import TheModal from "./components/TheModal.vue";
+
+import {onMounted}  from 'vue'
 export default {
-    name: "App"
+    name: "App",
+    components: {TheModal},
+    setup(){
+        return {
+
+        }
+    }
 }
 </script>
 

@@ -37,7 +37,6 @@ import {useField, useForm} from 'vee-validate'
 import store from "../store";
 import * as yup from "yup";
 
-
 export default {
     name: "Main",
     components: {

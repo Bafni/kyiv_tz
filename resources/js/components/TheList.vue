@@ -67,8 +67,10 @@
 
     </div>
     <div v-else class="container text-center md:mx-full px-3 py-3">
-
         <the-loader/>
+    </div>
+    <div v-if="tasks.length === 0" class="container text-center md:mx-full px-3 py-3">
+        <h1>Потрібно добавити собі трішки тасків =)</h1>
     </div>
 </template>
 

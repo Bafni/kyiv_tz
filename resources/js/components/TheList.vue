@@ -73,12 +73,10 @@
         <h1>Потрібно добавити собі трішки тасків =)</h1>
     </div>
 </template>
-
 <script>
 import TheLoader from "./TheLoader.vue";
 import store from "../store";
 import {ref, computed} from "vue";
-
 export default {
     name: "TheList",
     props: ['tasks'],

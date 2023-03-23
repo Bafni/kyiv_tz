@@ -31,8 +31,8 @@
 </template>
 
 <script>
-import {ref} from 'vue'
 import store from "../store";
+
 export default {
     name: "TheAddForm",
     props:['title', 'titleBlur', 'titleE',],
@@ -42,19 +42,9 @@ export default {
             store.commit('openModal')
             emit('create', props.title)
         }
-
-/*        const title = ref('')
-        const  createTask = () => {
-            store.commit('openModal')
-            store.commit('setTitle', title.value)
-            store.commit('setEvent', 'createTask')
-            store.commit('setBtnName', 'Create New Task')
-        }*/
         return {
             createTask
 
-/*            title,
-            createTask,*/
         }
     }
 

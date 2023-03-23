@@ -92,7 +92,6 @@ export default {
             }
             return status[type]
         }
-        const date = new Date()
 
         const editTask = task => {
             emit('editTask', task )

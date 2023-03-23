@@ -24,6 +24,7 @@ class EditRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'unique:tasks,title,'.$this->id],
+            'status' => ['required', 'string'],
             'deadline' => ['required', 'date'],
         ];
     }

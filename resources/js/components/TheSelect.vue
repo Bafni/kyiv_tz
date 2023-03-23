@@ -7,9 +7,10 @@
                         v-model="filter"
                         @change="filterBy"
                         class="md:w-auto w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 blockp-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option value="asc">ASC</option>
-                    <option value="desc">DESC</option>
-
+                    <option value="all">All</option>
+                    <option value="active">Active</option>
+                    <option value="done">Done</option>
+                    <option value="canceled">Canceled</option>
 
                 </select></div>
             <div class="md:flex justify-end">
@@ -37,7 +38,7 @@ export default {
         const sortBy = ref('')
         const filter = ref('')
         sortBy.value = 'longAgo'
-        filter.value = 'asc'
+        filter.value = 'all'
         const tasks = computed(()=> store.getters['getTasks'])
         const getSortBy = () => {
             if(sortBy.value === 'latest') {

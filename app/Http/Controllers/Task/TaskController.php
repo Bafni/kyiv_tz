@@ -18,12 +18,18 @@ class TaskController extends Controller
      */
     public function index($filter = false): JsonResource
     {
-
         if($filter) {
-            $tasks = Tasks::orderBy("created_at", $filter)->get();
+
+            $query = Tasks::query();
+            $query->where('status', $filter);
+            $tasks = $query->get();
+            if($filter === 'all') {
+                $tasks = Tasks::all();
+            }
         }else{
             $tasks = Tasks::all();
         }
+
         return TaskResource::collection($tasks);
     }
 
@@ -34,7 +40,10 @@ class TaskController extends Controller
     {
         $data = $request->validated();
 
+
         $task = Tasks::create($data);
+
+        $task->refresh();
 
         return new TaskResource($task);
     }

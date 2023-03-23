@@ -5,18 +5,16 @@
         </div>
     </div>
 <router-view></router-view>
-<teleport to="body">
-    <the-modal/>
-</teleport>
+
 </template>
 
 <script>
-import TheModal from "./components/TheModal.vue";
+//import TheModal from "./components/TheModal.vue";
 
 import {onMounted}  from 'vue'
 export default {
     name: "App",
-    components: {TheModal},
+    components: {/*TheModal*/},
     setup(){
         return {
 

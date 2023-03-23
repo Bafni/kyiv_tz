@@ -46,6 +46,7 @@ export default {
     },
     setup() {
         const {handleSubmit, resetField} = useForm()
+
         const {value: title, errorMessage: titleE, handleBlur: titleBlur} = useField('title',
             yup.string().trim().required()
         )
@@ -57,8 +58,8 @@ export default {
         const {value: status} = useField('status')
 
         const btnName = ref('')
-        const eventType = ref('')
 
+        const eventType = ref('')
 
         const actionAdd = () => {
             btnName.value = 'Create Task'
@@ -78,7 +79,6 @@ export default {
         const deleteTask = task => {
             store.dispatch('deleteTask', task.id)
         }
-
         const onSubmit = handleSubmit(async values => {
 
             await store.dispatch(`${eventType.value}`, values)

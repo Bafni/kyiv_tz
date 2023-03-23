@@ -56,7 +56,6 @@ const store = createStore({
                 }
                 return task
             })
-            console.log(state.tasks)
 
         },
         addTask(state, payload) {

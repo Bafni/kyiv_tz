@@ -4,17 +4,16 @@
             <h1 class="text-3xl font-extrabold dark:text-white">My Todo-s</h1>
         </div>
     </div>
-<router-view></router-view>
-
+<component is="Main"></component>
 </template>
 
 <script>
-//import TheModal from "./components/TheModal.vue";
 
-import {onMounted}  from 'vue'
+import Main from "./views/Main.vue";
+
 export default {
     name: "App",
-    components: {/*TheModal*/},
+    components: {Main},
     setup(){
         return {
 

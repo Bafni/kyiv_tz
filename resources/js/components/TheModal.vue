@@ -21,6 +21,7 @@
                         <div class="mb-6">
                             <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deadline
                                 date</label>
+
                             <input
                                 :value="deadline"
                                 :min="minDate"
@@ -93,7 +94,7 @@ export default {
             }
         }
         const date = new Date()
-        const minDate  = ref(addZero(date.getFullYear())+'-' + addZero(date.getMonth() +1 )+ '-' + addZero(date.getDate() +1))
+        const minDate  = ref(addZero(date.getFullYear())+'-' + addZero(date.getMonth() +1 )+ '-' + addZero(date.getDate()))
         return {
             minDate,
             validateE: computed(()=> store.getters['getValidateE']),

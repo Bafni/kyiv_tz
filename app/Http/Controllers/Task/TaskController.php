@@ -27,8 +27,11 @@ class TaskController extends Controller
                 $tasks = Tasks::all();
             }
         }else{
-            $tasks = Tasks::all();
+            $tasks = Tasks::withTrashed()->get();
         }
+/*        foreach ($tasks as $task) {
+            $task->restore();
+        }*/
 
         return TaskResource::collection($tasks);
     }
@@ -38,6 +41,8 @@ class TaskController extends Controller
      */
     public function store(CreateRequest $request): JsonResource
     {
+
+
         $data = $request->validated();
 
 

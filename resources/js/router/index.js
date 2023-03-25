@@ -11,7 +11,8 @@ const routes = [
             title: 'Home Page',
             layout: 'main',
             auth: false
-        }
+        },
+
     },
 ]
 
@@ -22,7 +23,7 @@ const router = createRouter({
     linkExactActiveClass: 'dark:text-white'
 })
 router.beforeEach((to, from, next) => {
-        next()
+    next()
 
 
 });

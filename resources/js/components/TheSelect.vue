@@ -11,7 +11,6 @@
                     <option value="active">Active</option>
                     <option value="done">Done</option>
                     <option value="canceled">Canceled</option>
-
                 </select></div>
             <div class="md:flex justify-end">
                 <label for="sort" class="md:w-full mx-2 my-3 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sort</label>

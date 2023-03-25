@@ -19,6 +19,7 @@
         "vue": "^3.2.36",
         "vue-loader": "^17.0.1",
         "vue-router": "^4.1.6",
+        "vuejs-paginate-next": "^1.0.2",
         "vuex": "^4.0.2",
         "yup": "^1.0.2"
     }

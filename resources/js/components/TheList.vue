@@ -1,11 +1,11 @@
 <template>
     <div v-if="!loader"
-        v-for="task in tasks"
+        v-for="task of tasks"
         :key="task.id"
         class="container md:mx-auto px-3 py-3">
         <div class="md:flex flex-row p-3 rounded bg-gray-800">
             <div class="basis-3/4 md:flex justify-between space-x-5">
-                <div class="md:mt-5">
+                <div class="md:mt-4">
                     <div class="flex items-center space-x-3">
                         <input
                             @change="clickToggle(task.id, $event)"
@@ -15,75 +15,111 @@
                     </div>
                 </div>
 
-                <div class="  my-3 md:mb-0 flex flex-initial">
-
-                        <div
-                            :class="statusType(task.status)[0]"
-                            class="flex-initial text-white font-medium rounded-full text-sm px-4 py-3 text-center mr-2 mb-2 ">{{statusType(task.status)[1]}}</div>
-                </div>
             </div>
-            <div class="basis-1/4  md:flex md:justify-end justify-start md:space-x-5">
-                <!--                       Блок часу-->
-                <div class=" md:w-auto md:mr-0 flex  md:justify-end p-2 md:text-right rounded border border-yellow-300 ">
-
-                    <svg fill="none" class="w-8 h-8 text-gray-500 dark:text-yellow-300" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <p class="w-full h-6 text-left mx-2 my-1  ">{{ task.deadline }}</p>
-
+            <div class="basis-1/4 md:flex md:justify-between justify-center md:space-x-5 ">
+                <!---->
+                <div class="flex-initial  mt-2">
+                    <div
+                        :class="statusType(task.status)[0]"
+                        class="flex-initial text-white font-medium rounded-full text-sm px-4 py-3 text-center mr-2 mb-2 ">{{statusType(task.status)[1]}}</div>
                 </div>
-                <!--                       Блок часу енд-->
-
-                <div class="w-full md:w-auto md:my-0 my-3">
+                <!-- -->
+                <!-- deadline -->
+                <div
+                    :class="deadlineType(task.deadline).border"
+                    class="h-11 w-[140px] mx-auto mt-2 border p-2 rounded space-x-2 flex-none" >
+                    <svg fill="none"
+                         :class="deadlineType(task.deadline).text"
+                         class="inline w-6 h-6 " stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p
+                        :class="deadlineType(task.deadline).text"
+                        class="inline h-6 text-left">{{ task.deadline }}</p>
+                </div>
+                <!-- deadline end -->
+                <div class="w-full mt-2 md:mt-0  md:w-auto">
                     <div class="flex justify-between space-x-6 ">
-                        <!--Блок Edit старт-->
+                        <!--edit start-->
                         <div class="w-full flex justify-end ">
                             <svg @click="editTask(task)" fill="none" class="cursor-pointer  w-6 h-6 text-gray-500 dark:text-blue-300" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"></path>
                             </svg>
                         </div>
-                        <!--Блок Edit енд-->
-                        <!--Блок Delete старт-->
+                        <!--edit end-->
+                        <!--delete start-->
                         <div  class="flex justify-end">
                             <svg @click="deleteTask(task)" fill="none" stroke="currentColor" class="cursor-pointer w-6 h-6 text-gray-500 dark:text-red-300" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"></path>
                             </svg>
                         </div>
                     </div>
-                    <!--Блок Delete енд-->
-                    <!-- Дата публікації старт-->
+                    <!--delete end-->
+                    <!-- date of publication start-->
                     <div class="w-full md:w-auto flex justify-end space-x-3 mt-2 ">
                         <svg fill="none" stroke="currentColor" class="w-5 h-5 text-gray-500 dark:text-gray-500" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"></path>
                         </svg>
                         <p class="">{{task.humansDate}}</p>
                     </div>
-                    <!-- Дата публікації енд-->
+                    <!-- date of publication end-->
                 </div>
-
             </div>
-
         </div>
-
     </div>
     <div v-else class="container text-center md:mx-full px-3 py-3">
         <the-loader/>
     </div>
-    <div v-if="tasks.length === 0" class="container text-center md:mx-full px-3 py-3">
+    <div v-if="tasks.length === 0" class="container text-sm text-center md:mx-full px-3 py-3">
         <h1>Потрібно добавити собі трішки тасків =)</h1>
     </div>
+
 </template>
 <script>
 import TheLoader from "./TheLoader.vue";
 import store from "../store";
-import {ref, computed} from "vue";
+import {ref, computed, watch} from "vue";
+
 export default {
     name: "TheList",
-    props: ['tasks'],
+    props: ['tasks',],
     emits:['editTask', 'deleteTask' ],
     components:{TheLoader},
 
     setup(props, {emit}){
+
+        function deadlineType(time) {
+            time = time + ' 23:59:59'
+            console.log(time)
+
+            const now = new Date();
+            const deadline = new Date(time)
+            const diff = deadline.getTime() - now.getTime()
+            console.log('diff', diff)
+            if(diff <= 43200000 && diff >= 0) {
+                console.log('rose')
+                return {
+                    border: 'border-rose-500',
+                    text: 'text-rose-500'
+                }
+            } else if(diff >= 86400001){
+                console.log('green')
+                return {
+                    border: 'border-green-500',
+                    text: 'text-green-500'
+                }
+            }else {
+                console.log('gray')
+                return {
+                    border: 'border-gray-500',
+                    text: 'text-gray-500'
+                }
+            }
+
+        }
+
+
         function statusType(type) {
             const status = {
                 active : ['dark:bg-green-600', 'active'],
@@ -115,6 +151,7 @@ export default {
         }
 
         return {
+            deadlineType,
             clickToggle,lineThrough,
             loader: computed(()=> store.getters['getLoader']),
             statusType,

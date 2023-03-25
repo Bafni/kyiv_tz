@@ -83,7 +83,7 @@
             </div>
         </div>
     </div>
-    <div v-else class="container text-center md:mx-full px-3 py-3">
+    <div v-else class="container text-center mx-auto px-3 py-3">
         <the-loader/>
     </div>
     <div v-if="tasks.length === 0" class="container text-sm text-center md:mx-full px-3 py-3">

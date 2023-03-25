@@ -23,7 +23,7 @@ class FilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => [''],
+            'status' => ['string', 'nullable'],
         ];
     }
 }

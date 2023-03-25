@@ -57,11 +57,11 @@
                     </div>
                     <!--delete end-->
                     <!-- date of publication start-->
-                    <div class="w-full md:w-auto flex justify-end space-x-3 mt-2 ">
-                        <svg fill="none" stroke="currentColor" class="w-5 h-5 text-gray-500 dark:text-gray-500" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <div class="md:w-[145px] text-right space-x-2 mt-2 ">
+                        <svg fill="none" stroke="currentColor" class="inline-block w-5 h-5 text-gray-500 dark:text-gray-500" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"></path>
                         </svg>
-                        <p class="">{{task.humansDate}}</p>
+                        <p class="inline-block">{{task.humansDate}}</p>
                     </div>
                     <!-- date of publication end-->
                 </div>
@@ -90,27 +90,26 @@ export default {
     setup(props, {emit}){
 
         function deadlineType(time) {
-            time = time + ' 23:59:59'
-            console.log(time)
-
+            time = time + ' 18:00:00'
             const now = new Date();
             const deadline = new Date(time)
             const diff = deadline.getTime() - now.getTime()
-            console.log('diff', diff)
-            if(diff <= 43200000 && diff >= 0) {
-                console.log('rose')
+            if(diff <= 86400000 && diff >= 0) {
                 return {
                     border: 'border-rose-500',
                     text: 'text-rose-500'
                 }
-            } else if(diff >= 86400001){
-                console.log('green')
+            } else if(diff >= 86400001 && diff < (86400000 * 2) ){
+                return {
+                    border: 'border-yellow-500',
+                    text: 'text-yellow-500'
+                }
+            }else if(diff > 86400001 * 2 ) {
                 return {
                     border: 'border-green-500',
                     text: 'text-green-500'
                 }
             }else {
-                console.log('gray')
                 return {
                     border: 'border-gray-500',
                     text: 'text-gray-500'
@@ -149,14 +148,12 @@ export default {
             }
             el.setAttribute('class', attrs.join(' ') )
         }
-
         return {
             deadlineType,
             clickToggle,lineThrough,
             loader: computed(()=> store.getters['getLoader']),
             statusType,
             editTask, deleteTask,
-
         }
 }
 }

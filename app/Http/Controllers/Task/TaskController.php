@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Task;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Task\CreateRequest;
 use App\Http\Requests\Task\EditRequest;
+use App\Http\Requests\Task\FilterRequest;
 use App\Http\Resources\Task\TaskResource;
 use App\Models\Tasks;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Request;
+
 
 
 class TaskController extends Controller
@@ -16,22 +19,29 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($filter = false): JsonResource
+    public function index(FilterRequest $request)
     {
-        if($filter) {
 
-            $query = Tasks::query();
-            $query->where('status', $filter);
-            $tasks = $query->get();
-            if($filter === 'all') {
-                $tasks = Tasks::all();
-            }
-        }else{
-            $tasks = Tasks::withTrashed()->get();
+        $data = $request->validated();
+
+        $query = Tasks::query();
+        if(isset($data['status']) && $data['status'] !== 'all') {
+
+            $query->where('status', $data['status']);
         }
-/*        foreach ($tasks as $task) {
+         /*$tasks = Tasks::withTrashed()->get();
+         foreach ($tasks as $task) {
             $task->restore();
         }*/
+        $tasks = $query->get();
+        $now = Carbon::now()->timestamp;
+        foreach ($tasks as $task) {
+            $is = Carbon::parse($task->deadline)->timestamp;
+            if($now > $is){
+                $task->status = 'canceled';
+                $task->save();
+            }
+        }
 
         return TaskResource::collection($tasks);
     }

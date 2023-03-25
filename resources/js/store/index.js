@@ -75,7 +75,7 @@ const store = createStore({
         async getTasks({commit}) {
             try {
                 commit('setLoader')
-                const {data} = await axios.get('/api/task')
+                const {data} = await axios.post('/api/task')
                 await commit('setTasks', data.data)
                 commit('setLoader')
             } catch (e) {
@@ -86,7 +86,10 @@ const store = createStore({
         async getTasksFilter({commit}, payload) {
             try {
                 commit('setLoader')
-                const {data} = await axios.get(`/api/task/${payload}`)
+                const {data} = await axios.post(`/api/task`, {
+                    status: payload
+                    }
+                 )
                 await commit('setTasks', data.data)
                 commit('setLoader')
             } catch (e) {

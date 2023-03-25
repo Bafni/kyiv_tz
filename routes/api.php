@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::controller(\App\Http\Controllers\Task\TaskController::class)->prefix('task')->group(function () {
-    Route::get('{filter?}', 'index');
+    Route::post('/', 'index');
     Route::post('store', 'store');
     Route::post('{task}/update', 'update');
     Route::delete('{task}', 'destroy');

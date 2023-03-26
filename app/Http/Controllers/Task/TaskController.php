@@ -9,9 +9,7 @@ use App\Http\Requests\Task\FilterRequest;
 use App\Http\Resources\Task\TaskResource;
 use App\Models\Tasks;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-
 
 
 class TaskController extends Controller
@@ -21,20 +19,29 @@ class TaskController extends Controller
      */
     public function index(FilterRequest $request)
     {
-
         $data = $request->validated();
 
         $query = Tasks::query();
-        if(isset($data['status']) && $data['status'] !== 'all') {
 
-            $query->where('status', $data['status']);
+        if(isset($data['sort']) && $data['sort'] !== 'all') {
+            if($data['sort'] !== 'asc' || $data['sort'] !== 'desc'){
+                $query->where('status', $data['sort']);
+            }else{
+                $query->orderBy('created_at', $data['sort']);
+            }
         }
+
          /*$tasks = Tasks::withTrashed()->get();
          foreach ($tasks as $task) {
             $task->restore();
         }*/
-        $tasks = $query->get();
+
+       // $tasks = $query->get(); /*vue pagination*/
+
+        $tasks = $query->paginate(5, ['*'], 'page', $data['page']);
+
         $now = Carbon::now()->timestamp;
+
         foreach ($tasks as $task) {
             $is = Carbon::parse($task->deadline)->timestamp;
             if($now > $is){

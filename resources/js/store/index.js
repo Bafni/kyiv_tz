@@ -1,6 +1,5 @@
 import {createStore} from 'vuex'
 import axios from "axios";
-
 const store = createStore({
     modules: {},
     state() {
@@ -11,9 +10,15 @@ const store = createStore({
             message: '',
             isEdit: false,
             tasks: [],
+            sort: null,
+            page: 1,
+            pagination: []
         }
     },
     getters: {
+        getPagination(state) {
+            return state.pagination
+        },
         getValidateE(state) {
             return state.validateE
         },
@@ -34,6 +39,15 @@ const store = createStore({
         }
     },
     mutations: {
+        setPagination(state,  payload) {
+           state.pagination = payload
+        },
+        setPage(state, payload){
+            state.page = payload
+        },
+        setSort(state, payload){
+            state.sort = payload
+        },
         setValidateE(state, payload) {
             state.validateE = payload
         },
@@ -56,7 +70,6 @@ const store = createStore({
                 }
                 return task
             })
-
         },
         addTask(state, payload) {
             state.tasks.push(payload)
@@ -72,24 +85,15 @@ const store = createStore({
         }
     },
     actions: {
-        async getTasks({commit}) {
+        async getTasks({state, commit}) {
             try {
                 commit('setLoader')
-                const {data} = await axios.post('/api/task')
-                await commit('setTasks', data.data)
-                commit('setLoader')
-            } catch (e) {
-                commit('openModal')
-                commit('setMessage', 'Failed to load task list')
-            }
-        },
-        async getTasksFilter({commit}, payload) {
-            try {
-                commit('setLoader')
-                const {data} = await axios.post(`/api/task`, {
-                    status: payload
-                    }
-                 )
+                const {data} = await axios.post('/api/task', {
+                    status: state.status,
+                    sort: state.sort,
+                    page: state.page,
+                } )
+                await commit('setPagination', data.meta)
                 await commit('setTasks', data.data)
                 commit('setLoader')
             } catch (e) {

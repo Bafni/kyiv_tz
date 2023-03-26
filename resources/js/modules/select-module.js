@@ -22,7 +22,7 @@ export default function selectModule() {
             tasks.value.sort((a, b) => new Date(b.deadline) - new Date(a.deadline))
             tasks.value.reverse()
         }
-        if (value === 'deadline_coming') {
+        if (value === 'deadlineComing') {
             tasks.value.sort((a, b) => new Date(b.deadline) - new Date(a.deadline))
         }
     }

@@ -27,7 +27,10 @@
         @editTask="editTask"
         @deleteTask="deleteTask"
     />
-    <div v-if="tasks" class="container text-center mx-auto px-3 py-3">
+    <div v-show="true" v-if="tasks.length !== 0" class="container text-center mx-auto px-3 py-3">
+        <ThePagination />
+    </div>
+    <div v-show="false" v-if="tasks" class="container text-center mx-auto px-3 py-3">
         <nav v-if="tasks.length !== 0" aria-label="Page navigation ">
             <paginate
                 v-model="page"
@@ -60,7 +63,6 @@
             @deadline-blur="deadlineBlur"
         />
     </teleport>
-
 </template>
 
 <script>
@@ -69,21 +71,18 @@ import TheList from "../components/TheList.vue";
 import TheModal from "../components/TheModal.vue";
 import TheLoader from "../components/TheLoader.vue";
 import TheFilter from "../components/TheFilter.vue";
+import ThePagination from "../components/ThePagination.vue";
 import {computed, onMounted, ref} from "vue";
 import store from "../store";
 import Paginate from 'vuejs-paginate-next'
-import paginateModule from "../modules/paginate-module";
+import paginateModule from "../modules/paginate-vue-module";
 import validateModule from "../modules/validate-module";
 import actionsModule from "../modules/actions-module"
 import filterModule from "../modules/filter-module";
 import selectModule from "../modules/select-module";
-
 export default {
     name: "Main",
-    components: {
-        TheLoader,
-        TheAddForm, TheList, TheModal, Paginate, TheFilter
-    },
+    components: {TheLoader, TheAddForm, TheList, TheModal, Paginate, TheFilter, ThePagination},
     setup() {
         onMounted(() => {
             store.dispatch('getTasks')
@@ -92,6 +91,7 @@ export default {
         const eventType = ref('')
         const validate = validateModule(eventType)
         const actions = actionsModule(btnName, eventType, validate)
+
         return {
             ...filterModule(),
             ...selectModule(),

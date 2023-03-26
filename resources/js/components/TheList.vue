@@ -22,7 +22,7 @@
                 <div class="flex-initial  mt-2">
                     <div
                         :class="statusType(task.status)[0]"
-                        class="flex-initial text-white font-medium rounded-full text-sm px-4 py-3 text-center mr-2 mb-2 ">
+                        class="flex-initial text-white font-medium rounded-full text-sm px-4 py-3 text-center md:mr-2 mb-2 ">
                         {{ statusType(task.status)[1] }}
                     </div>
                 </div>

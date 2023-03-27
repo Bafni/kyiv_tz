@@ -10,7 +10,7 @@ const store = createStore({
             message: '',
             isEdit: false,
             tasks: [],
-            sort: null,
+            sort: 'all',
             page: 1,
             pagination: []
         }

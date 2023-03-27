@@ -17,34 +17,28 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(FilterRequest $request)
+    public function index(FilterRequest $request): JsonResource
     {
         $data = $request->validated();
 
         $query = Tasks::query();
-
-        if(isset($data['sort']) && $data['sort'] !== 'all') {
-            if($data['sort'] !== 'asc' || $data['sort'] !== 'desc'){
-                $query->where('status', $data['sort']);
-            }else{
-                $query->orderBy('created_at', $data['sort']);
-            }
+        if (isset($data['sort']) && $data['sort'] != 'all') {
+            $query->where('status', $data['sort']);
         }
 
-         /*$tasks = Tasks::withTrashed()->get();
-         foreach ($tasks as $task) {
-            $task->restore();
-        }*/
+        //var_dump($tasks);
+        /*$tasks = Tasks::withTrashed()->get();
+        foreach ($tasks as $task) {
+           $task->restore();
+       }*/
 
-       // $tasks = $query->get(); /*vue pagination*/
-
-        $tasks = $query->paginate(5, ['*'], 'page', $data['page']);
+        $tasks = $query->latest()->paginate(5, ['*'], 'page', $data['page']);
 
         $now = Carbon::now()->timestamp;
 
         foreach ($tasks as $task) {
             $is = Carbon::parse($task->deadline)->timestamp;
-            if($now > $is){
+            if ($now > $is) {
                 $task->status = 'canceled';
                 $task->save();
             }
@@ -85,7 +79,7 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tasks $task):void
+    public function destroy(Tasks $task): void
     {
         $task->delete();
     }

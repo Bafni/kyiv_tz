@@ -21,16 +21,17 @@
             />
         </div>
     </div>
+<!--   :tasks="request(tasks)"  -->
     <the-list
         v-if="tasks.length !== 0"
-        :tasks="request(tasks)"
+        :tasks="tasks"
         @editTask="editTask"
         @deleteTask="deleteTask"
     />
-    <div v-show="true" v-if="tasks.length !== 0" class="container text-center mx-auto px-3 py-3">
+    <div v-if="tasks && tasks.length !== 0" class="container text-center mx-auto px-3 py-3">
         <ThePagination />
     </div>
-    <div v-show="false" v-if="tasks" class="container text-center mx-auto px-3 py-3">
+<!--    <div v-show="false" v-if="tasks" class="container text-center mx-auto px-3 py-3">
         <nav v-if="tasks.length !== 0" aria-label="Page navigation ">
             <paginate
                 v-model="page"
@@ -49,7 +50,7 @@
                 :next-text="'Next'"
             />
         </nav>
-    </div>
+    </div>-->
     <teleport to="body">
         <the-modal
             v-model:status="status"
@@ -95,7 +96,7 @@ export default {
         return {
             ...filterModule(),
             ...selectModule(),
-            ...paginateModule(),
+           // ...paginateModule(),
             ...validate,
             ...actions,
             btnName,

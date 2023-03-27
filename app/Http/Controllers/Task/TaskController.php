@@ -11,7 +11,6 @@ use App\Models\Tasks;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-
 class TaskController extends Controller
 {
     /**
@@ -25,13 +24,10 @@ class TaskController extends Controller
         if (isset($data['sort']) && $data['sort'] != 'all') {
             $query->where('status', $data['sort']);
         }
-
-        //var_dump($tasks);
         /*$tasks = Tasks::withTrashed()->get();
         foreach ($tasks as $task) {
            $task->restore();
        }*/
-
         $tasks = $query->latest()->paginate(5, ['*'], 'page', $data['page']);
 
         $now = Carbon::now()->timestamp;
@@ -46,16 +42,12 @@ class TaskController extends Controller
 
         return TaskResource::collection($tasks);
     }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(CreateRequest $request): JsonResource
     {
-
-
         $data = $request->validated();
-
 
         $task = Tasks::create($data);
 
@@ -75,7 +67,6 @@ class TaskController extends Controller
 
         return new TaskResource($task);
     }
-
     /**
      * Remove the specified resource from storage.
      */

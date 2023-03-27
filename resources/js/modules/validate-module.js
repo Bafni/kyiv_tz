@@ -1,37 +1,26 @@
 import {useField, useForm} from "vee-validate";
-import {object, string,}  from "yup";
-import * as yup  from "yup";
+import * as yup from "yup";
 import store from "../store";
-import {watch} from "vue";
-
 
 export default function validateModule(eventType) {
-    const {values, errors, handleSubmit, resetField} = useForm()
+    const {values, errors, handleSubmit, resetForm} = useForm( )
 
-    const { value: title, errorMessage: titleE, handleBlur: titleBlur} = useField('title',
+    const { value: title} = useField('title',
         yup.string().trim().required()
     )
-
-    const {value: deadline, errorMessage: deadlineE, handleBlur: deadlineBlur} = useField('deadline',
+    const {value: deadline} = useField('deadline',
         yup.date().required(),
     )
-
     const {value: id} = useField('id')
-
     const {value: status} = useField('status')
-
     const onSubmit = handleSubmit(async values => {
         await store.dispatch(`${eventType.value}`, values)
         const e = await store.getters['getValidateE']
         if (!e) {
-            resetField('title')
-            resetField('deadline')
+            resetForm()
         }
     })
-
     return {
-        title, titleE, titleBlur,
-        deadline, deadlineE, deadlineBlur,
-        status, id, handleSubmit, resetField, onSubmit
+        values, errors, handleSubmit, onSubmit
     }
 }

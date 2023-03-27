@@ -9,10 +9,10 @@ export default function actionsModule(btnName, eventType, validate) {
     const editTask = task => {
         btnName.value = 'Edit Task'
         eventType.value = 'editTask'
-        validate.id.value = task.id
-        validate.title.value = task.title
-        validate.deadline.value = task.deadline
-        validate.status.value = task.status
+        validate.values.id = task.id
+        validate.values.title = task.title
+        validate.values.deadline= task.deadline
+        validate.values.status = task.status
         store.commit('setIsEdit', true)
         store.commit('openModal')
     }

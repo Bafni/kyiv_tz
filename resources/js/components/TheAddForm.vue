@@ -36,7 +36,7 @@ import store from "../store";
 export default {
     name: "TheAddForm",
     props:['title', 'titleBlur', 'titleE',],
-    emits:['create', 'update:title', 'actionModal'],
+    emits:['create', 'update:title', 'update:values', 'actionModal'],
     setup(props,{emit}) {
         const createTask = () => {
             store.commit('openModal')

@@ -1,6 +1,6 @@
 <template>
     <the-add-form
-        v-model:title="title"
+        v-model:title="values.title"
         @actionModal="actionAdd"
     />
     <div class="container py-6 md:mx-auto px-3">
@@ -53,15 +53,12 @@
     </div>-->
     <teleport to="body">
         <the-modal
-            v-model:status="status"
-            v-model:title="title"
-            v-model:deadline="deadline"
+            v-model:status="values.status"
+            v-model:title="values.title"
+            v-model:deadline="values.deadline"
+            v-model:errors="errors"
             @onSubmit="onSubmit"
             :btnName="btnName"
-            @title-blur="titleBlur"
-            :title-e="titleE"
-            :deadline-e="deadlineE"
-            @deadline-blur="deadlineBlur"
         />
     </teleport>
 </template>

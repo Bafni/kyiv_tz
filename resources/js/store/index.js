@@ -64,15 +64,11 @@ const store = createStore({
             state.tasks = state.tasks.filter(task => task.id !== payload)
         },
         editTasks(state, payload) {
-            state.tasks = state.tasks.map(task => {
-                if (task.id === payload.id) {
-                    task = payload
-                }
-                return task
-            })
+            state.tasks = state.tasks.filter(task => task.id !== payload.id )
+            state.tasks.unshift(payload)
         },
         addTask(state, payload) {
-            state.tasks.push(payload)
+            state.tasks.unshift(payload)
         },
         setTasks(state, payload) {
             state.tasks = payload
